@@ -2,6 +2,7 @@ package com.baehoons.ble_test3
 
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.BluetoothLeScanner
 import android.bluetooth.le.ScanCallback
@@ -33,7 +34,10 @@ class MainActivity : AppCompatActivity() {
     /* Listen for scan results */
     private val leScanCallback = object : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult) {
-            deviceListAdapter.addDevice(result.device)
+            if(result.device.type!=0){
+                deviceListAdapter.addDevice(result.device)
+            }
+
         }
     }
 
