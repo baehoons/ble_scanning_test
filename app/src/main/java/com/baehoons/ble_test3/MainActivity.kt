@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
             if(result.device.type!=0){
                 deviceListAdapter.addDevice(result.device)
             }
-
         }
     }
 
