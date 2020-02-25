@@ -11,14 +11,14 @@ import java.lang.reflect.Method
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainAdapter :RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class MainAdapter :RecyclerView.Adapter<MainAdapter.DeviceHolder>(){
 
-
+    var onDeviceClickListener: ((BluetoothDevice) -> Unit)? = null
 
     private val devices = ArrayList<BluetoothDevice>()
     class DeviceHolder(parent:ViewGroup):RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_main,parent,false))
     {
-        fun onBind(device: BluetoothDevice){
+        fun onBind(device: BluetoothDevice, onDeviceClickListener: (BluetoothDevice)->Unit){
             itemView.run {
                 var type_text:String
                 when(device.type){
@@ -33,9 +33,13 @@ class MainAdapter :RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 //            var uuid_text = (device.uuids).joinToString(separator = "-")
 //            view.uuid.text = uuid_text.substring(0,8)+" ..."
                 type.text = type_text
+                items.setOnClickListener{onDeviceClickListener.invoke(device)
+
+                }
             }
         }
     }
+
 
 
     override fun onCreateViewHolder(container: ViewGroup, viewType: Int) = DeviceHolder(
@@ -44,12 +48,18 @@ class MainAdapter :RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     override fun getItemCount() = devices.size
 
-    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        (viewHolder as? DeviceHolder)?.onBind(devices[position])
+    override fun onBindViewHolder(viewHolder:DeviceHolder, position: Int) {
+        viewHolder.onBind(devices[position]){
+            onDeviceClickListener?.invoke(it)
+        }
+
     }
 
     fun addDevice(device: BluetoothDevice) {
         if(!devices.contains(device)){
+
+            if(device.name == "NYSLP19020037P") return
+
             devices.add(device)
             notifyDataSetChanged()
         }
@@ -86,3 +96,4 @@ class MainAdapter :RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 //        false
 //    )
 }
+
