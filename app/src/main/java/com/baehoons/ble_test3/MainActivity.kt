@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(),BleActivity {
             if(result.device.type!=0){
                 deviceListAdapter.addDevice(result.device)
                 Log.d("BaeHun", "${result.device.name?:"noNmae"}")
-                result.device.connectGatt(this@MainActivity,autoConnect,mBluetoothGattCallback)
+                //result.device.connectGatt(this@MainActivity,autoConnect,mBluetoothGattCallback)
             }
         }
 }
@@ -181,6 +181,8 @@ class MainActivity : AppCompatActivity(),BleActivity {
 
     override fun onDeviceClicked(device: BluetoothDevice){
         supportFragmentManager.showFragment(R.id.container, DeviceConnectionFragment.newInstance(device))
+        button_discover.text = getString(R.string.start_scanning)
+        progress_bar.invisible()
         stopScanning()
         mains.visibility = View.INVISIBLE
     }

@@ -93,6 +93,7 @@ class DeviceManager(context: Context) {
                                 val jsonData = JSONObject().apply {
                                     this.accumulate("userId", "Uv4OywyiZZhlJDvtm8JCH48WIs03")
                                     this.accumulate("loginType", 2)
+                                    Log.d("hoon",String.format("RESULT : %s",this))
                                 }
                                 setValue(jsonData.toString())
                                 writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
@@ -106,13 +107,13 @@ class DeviceManager(context: Context) {
                             for (characteristic in service.characteristics) {
                                 Log.d(TAG, String.format("Service CHARACT UUID: (%s)", characteristic.uuid))
 
-                                for (descriptor in characteristic.descriptors) {
-                                    Log.d(TAG, String.format("Service DESCRIPTOR UUID: (%s)", descriptor.uuid))
-                                }
-                            }
+
+
+                        for (descriptor in characteristic.descriptors) {
+                            Log.d(TAG, String.format("Service DESCRIPTOR UUID: (%s)", descriptor.uuid))
                         }
-
-
+                    }
+                }
 
                         deviceStatusListener?.onConnect(gatt)
                     }
@@ -125,10 +126,7 @@ class DeviceManager(context: Context) {
                     }
 
                     override fun onCharacteristicWrite(
-                        gatt: BluetoothGatt?,
-                        characteristic: BluetoothGattCharacteristic?,
-                        status: Int
-                    ) {
+                        gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic?, status: Int) {
                         super.onCharacteristicWrite(gatt, characteristic, status)
 
                         Log.d("ayteneve93_test", "$status")

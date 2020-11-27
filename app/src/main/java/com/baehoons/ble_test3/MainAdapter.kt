@@ -1,14 +1,11 @@
 package com.baehoons.ble_test3
 
-import android.bluetooth.BluetoothAdapter
+
 import android.bluetooth.BluetoothDevice
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.adapter_main.view.*
-import java.lang.reflect.Method
-import java.util.*
 import kotlin.collections.ArrayList
 
 class MainAdapter :RecyclerView.Adapter<MainAdapter.DeviceHolder>(){
